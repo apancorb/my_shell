@@ -11,11 +11,11 @@
 #define VALID_LINE 1024
 
 
-int process(char *line, FILE *input) {
+int process(char *line) {
     int words;
 
     if ((words = count_num_cmd(line)) != 0) {
-        execute(line, words, input);
+        execute(line, words);
     } else { /* we have an empty line so it gets skipped */
         return FALSE;
     }
@@ -40,12 +40,12 @@ int count_num_cmd(char *line) {
     return words;
 }
 
-void execute(char *line, int words, FILE *input) {
+void execute(char *line, int words) {
     int is_success;
     char first_str[VALID_LINE] = {0}, second_str[VALID_LINE] = {0};
     /* 
         There are two type of commands:
-            1. Shell (cd, quit, sql, and any other command you want the shell to do)
+            1. Shell (cd, quit, and any other command you want the shell to do)
             2. Non-Shell
     */
     sscanf(line, " %s %s", first_str, second_str);
@@ -122,6 +122,7 @@ void execute_non_shell(char *line) {
     */
 
     strcat(exe, line);
+    
     if (!CreateProcess(NULL, exe, NULL, NULL, 0, 0, NULL, NULL, &si, &pi)) {
        fprintf(stdout, "Invalid Command provided. Run the <help> command for more information.\n");
        return; 

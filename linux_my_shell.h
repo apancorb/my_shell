@@ -173,7 +173,7 @@ int execute(char **parsed, int words) {
             2. Non-Shell
     */
     if ((strcmp(parsed[0], "quit") == 0 || strcmp(parsed[0], "exit") == 0) && words == 1) {
-        execute_quit();
+        exit(EXIT_SUCCESS);
     } else if (strcmp(parsed[0], "cd") == 0) {
         if ((is_success = execute_cd(parsed, words)) == FALSE) {
             fprintf(stdout, "There was an error changing directory. Run the <help> command for more information.\n");
@@ -186,10 +186,6 @@ int execute(char **parsed, int words) {
 
     }
   
-}
-
-void execute_quit() {
-    exit(EXIT_SUCCESS);
 }
 
 int execute_cd(char **parsed, int words) { 
@@ -224,7 +220,7 @@ int execute_non_shell(char **parsed, int words) {
     
      /* child executing the command */
     if (pid == 0) { 
-        execvp(parsed[0], (const char * const *)parsed);
+        execvp(parsed[0], (char * const *)parsed);
         /* since the command was unsuccesful */
         fprintf(stderr, "Failed to execute %s\n", parsed[0]);
         exit(EXIT_FAILURE);

@@ -54,7 +54,7 @@ int main (int argc, char *argv[]) {
     while (fgets(line, VALID_LINE, input) != NULL) {
         int is_process;
 
-        if ((is_process = process(line, input)) == FALSE) {
+        if ((is_process = process(line)) == FALSE) {
             /* the shell doesn't terminate when there is an invalid command */
             fprintf(stdout, "%s ", shell_name);
             fflush(stdout);
@@ -68,42 +68,3 @@ int main (int argc, char *argv[]) {
     return 0;
     
 }
-
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      /*  char first_string[VALID_LINE] = {0};
-        int values_read = 0, i = 0, is_blank_line = 0;
-
-
-        if(input == stdin){
-            printf("> ");
-        }
-        
-        /* check if it is a blank line 
-        for(i = 0; i < strlen(line); i++){
-            if(isspace(line[i]) != 0){
-                is_blank_line++;
-            }
-        }
-        if(is_blank_line == strlen(line)){
-            continue;
-        }
-        
-        /* read the first string in the line 
-        sscanf(line, " %s", first_string)*/
