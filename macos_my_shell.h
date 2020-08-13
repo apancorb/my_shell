@@ -31,7 +31,6 @@ int process(char *line) {
         char *parsed_line[words];
         /* is_success: boolean variable */
         int is_success;
-
         /* Initialize the linked list */
         if ((is_success = init_cmd_list(&list, words)) == FALSE) {
             fprintf(stderr, "init_cmd_list error");
@@ -39,7 +38,7 @@ int process(char *line) {
             exit(EXIT_FAILURE);
         }
             
-
+	
         /* parse the command line */
         parse(line, words, list); 
         /* add each command line to a string of pointers, that will be used for the exucation */
@@ -82,7 +81,7 @@ int count_num_cmd(char *line) {
 }
 
 /* returns a parsed line, by the out of parameter, using the line provided by the user */
-void parse(char * line, int words, Cmd_List *list) {
+parse(char * line, int words, Cmd_List *list) {
     int i = 0, j = 0, l = 0;
     int is_success;
     char word[VALID_LINE] = {0};
@@ -97,7 +96,7 @@ void parse(char * line, int words, Cmd_List *list) {
             /* We add the word to our linked list */
             if ((is_success = add_cmd(list, word)) == FALSE) {
                 fprintf(stderr, "add_cmd error");
-                fprintf(stdout, "Something went wrong while parsing your command. Run the <help> command for more information.\n");
+                fprintf(stdout, "Something went wrong while parsing your command. Run the <info> command for more information.\n");
                 exit(EXIT_FAILURE);
             }
             while (j-- != 0) {
@@ -155,7 +154,7 @@ void destroy_cmd(Cmd *command) {
     free(command);
 }
 
-void destroy_cmd_list(Cmd_List *list) {
+destroy_cmd_list(Cmd_List *list) {
     int i = 0;
     Cmd *curr = list->head;
     for (i = 0; i < list->words; i++) {
@@ -176,7 +175,7 @@ int execute(char **parsed, int words) {
         exit(EXIT_SUCCESS);
     } else if (strcmp(parsed[0], "cd") == 0) {
         if ((is_success = execute_cd(parsed, words)) == FALSE) {
-            fprintf(stdout, "There was an error changing directory. Run the <help> command for more information.\n");
+            fprintf(stdout, "There was an error changing directory. Run the <info> command for more information.\n");
             return FALSE;
         }
     /* } else if (strcmp(parsed[0], "sql") == 0 ) {
@@ -205,7 +204,7 @@ int execute_cd(char **parsed, int words) {
         }
     } else { /* Inavalid Command */
         fprintf(stderr, "cd error");
-        fprintf(stdout, "Invalid Command, too many arguments for <cd>. Run the <help> command for more information.\n");
+        fprintf(stdout, "Invalid Command, too many arguments for <cd>. Run the <info> command for more information.\n");
         return FALSE;
     }
 }
